@@ -1,8 +1,14 @@
 <?php
-
 session_start();
 
 require 'database.php';
+
+
+function iScore ($conn) {
+	$update = $conn->prepare('UPDATE users Set score = score + 1 WHERE id = :id');
+	$update->bindParam(':id', $_SESSION['user_id']);
+	$update->execute();
+}
 
 if(isset($_SESSION['user_id'])){
 	
@@ -21,9 +27,8 @@ if(isset($_SESSION['user_id'])){
 	$row = $statement->fetch();
 	
 	
-	$_SESSION ["idR"] = rand(0, ($row['anzahl']-1));
 	
-	$records2->bindParam(':id', $_SESSION ["idR"]);
+	$records2->bindParam(':id', $_SESSION["idR"]);
 	$records2->execute();
 	$results2 = $records2->fetch(PDO::FETCH_ASSOC);
 	$fragen = NULL;
@@ -32,15 +37,12 @@ if(isset($_SESSION['user_id'])){
 	}
 	
 }
-
-unset($_POST);
-
 ?>
 
 <DOCTYPE html>
 <html>
 <head>
-	<title>Willkommen zum Quizz</title>
+	<title>Ergebnis</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -57,32 +59,56 @@ unset($_POST);
 	
 	<?php if (!empty($user)): ?>
 	
-		<br />Welcome <?= $user['name']; ?>
-		<br />Eingeloggt als: 
-		<?php if ($user['admin']) {?>
-			Admin
-			<br />Neue Frage <a href="fragen.php">eintragen?</a>
-		<?php }else { ?>
-			Nutzer
-		<?php } ?>
-		<br /><br />You are successfully logged in!
-		<br /><br />Score: <?= $user['score']; ?>
+	
+
+		<header>
+			
+		</header>
 		<article>
 		<section>
+			<header>
+				<h2>Ergebnis: </h2>
 			
-			
-			
-			
-				<header>Frage <?= $fragen['id'] + 1; ?></header>
-				<h2><?= $fragen['frage']; ?></h2>
-				<form action="ergebnis.php" method="POST">
-				<button type="submit" name="1" value="1"><?= $fragen['antwort1']; ?></button>
-				<button type="submit" name="2" value="2"><?= $fragen['antwort2']; ?></button>			
-				</form>
+			<?php
 				
+				
+				if (isset($_POST['1'])){
+					$_SESSION['a1'] = $_POST['1'];
+					if ($fragen['richtig'] == '1'){
+						$richtig = true;
+					} else {
+						$richtig = false;
+					}
+				}
+				if (isset($_POST['2'])) {
+					$_SESSION['a2'] = $_POST['2'];
+					if ($fragen['richtig'] == '2'){
+						$richtig = true;
+					} else {
+						$richtig = false;
+					}
+				}	
+				if ($richtig){
+					echo "Richtig!"	;	
+					iScore($conn);
+					
+					
+						
+				} else if(!$richtig){
+					echo "Falsch!";
+					$next = false;
+				}
+				
+				
+				
+				?>
+				</header>
+			<br /><br />Score: <?= $user['score']; ?>
+			
+			
 		</section>
 		<section>
-				
+				<br /><br /><a href="index.php">Weiter</a>
 		</section>
 		</article>
 		

@@ -10,12 +10,12 @@ require 'database.php';
 
 $message = '';
 
-if(!empty($_POST['email']) && !empty($_POST['password'])):
+if(!empty($_POST['name']) && !empty($_POST['password'])):
 	// Enter the new user in the database
-	$sql = "INSERT INTO users (email, password) VALUES (:email, :password)";
+	$sql = "INSERT INTO users (name, password) VALUES (:name, :password)";
 	$stmt = $conn->prepare($sql);
 	
-	$stmt->bindParam(':email', $_POST['email']);
+	$stmt->bindParam(':name', $_POST['name']);
 	$stmt->bindParam(':password', password_hash($_POST['password'], PASSWORD_BCRYPT));
 	if($stmt->execute() ):
 		$message = 'Neuer Benutzer wurde erstellt!';
@@ -35,7 +35,7 @@ endif;
 <body>
 	
 	<header> 
-		<a href="index.html">Quizz</a>
+		<a href="index.php">Quizz</a>
 	</header>
 	
 	<?php if(!empty($message)): ?>
@@ -46,7 +46,7 @@ endif;
 	<span>or <a href="login.php">login here</a></span>
 
 	<form action="register.php" method="POST">	
-		<input type="text" placeholder="Enter your email" name="email">
+		<input type="text" placeholder="Enter your name" name="name">
 		<input type="password" placeholder="and password" name="password">
 		<input type="password" placeholder="confirm password" name="confirm_password">		
 		<input type="submit">

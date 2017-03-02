@@ -8,12 +8,12 @@ if ( isset($_SESSION['user_id'])) {
 
 require 'database.php';
 
-if(!empty($_POST['email']) && !empty($_POST['password'])):
+if(!empty($_POST['name']) && !empty($_POST['password'])):
 	
 	
 
-	$records = $conn->prepare('SELECT id,email, password FROM users WHERE email = :email');
-	$records->bindParam(':email', $_POST['email']);
+	$records = $conn->prepare('SELECT id,name, password FROM users WHERE name = :name');
+	$records->bindParam(':name', $_POST['name']);
 	$records->execute();
 	$results = $records->fetch(PDO::FETCH_ASSOC);
 	
@@ -53,7 +53,7 @@ endif;
 	
 	<form action="login.php" method="POST">
 		
-		<input type="text" placeholder="Enter your email" name="email">
+		<input type="text" placeholder="Enter your name" name="name">
 		<input type="password" placeholder="and password" name="password">
 		
 		<input type="submit">
