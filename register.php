@@ -10,8 +10,9 @@ require 'database.php';
 
 $message = '';
 
-if(!empty($_POST['name']) && !empty($_POST['password']) && (($_POST['password']) == ($_POST['confirm_password']))):
+if(!empty($_POST['name']) && !empty($_POST['password']) && !empty($_POST['confirm_password'])){
 	// Enter the new user in the database
+	if (($_POST['password']) == ($_POST['confirm_password'])){
 	$sql = "INSERT INTO users (name, password) VALUES (:name, :password)";
 	$stmt = $conn->prepare($sql);
 	
@@ -22,10 +23,10 @@ if(!empty($_POST['name']) && !empty($_POST['password']) && (($_POST['password'])
 	else:
 		$message = 'Es ist ein Fehler beim Erstellen des Benutzers aufgetreten.';
 	endif;
-else:
+	}else {
 	$message = 'Passwörter stimmen nicht überein.';
-endif;
-
+	}
+}
 ?>
 
 <!DOCTYPE html>
