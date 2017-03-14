@@ -40,7 +40,7 @@ unset($_POST);
 <DOCTYPE html>
 <html>
 <head>
-	<title>Willkommen zum Quizz</title>
+	<title>Willkommen zum Quiz</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -51,13 +51,13 @@ unset($_POST);
 				<a href="logout.php">Logout?</a>
 		</aside>
 		<?php endif; ?>
-		<a href="index.php">Quizz</a>
+		<a href="index.php">Quiz</a>
 	</header>
 	
 	
 	<?php if (!empty($user)): ?>
 	
-		<br />Welcome <?= $user['name']; ?>
+		<br />Willkommen <?= $user['name']; ?>
 		<br />Eingeloggt als: 
 		<?php if ($user['admin']) {?>
 			Admin
@@ -65,8 +65,9 @@ unset($_POST);
 		<?php }else { ?>
 			Nutzer
 		<?php } ?>
-		<br /><br />You are successfully logged in!
+		<br /><br />
 		<br /><br />Score: <?= $user['score']; ?>
+		<br /><br />Anzahl Fragen in der Datenbank: <?= $row['anzahl']; ?>
 		<article>
 		<section>
 			
@@ -89,8 +90,8 @@ unset($_POST);
 	<?php else: ?>
 	
 		<h1>Bitte einloggen oder registrieren!</h1>
-		<a href="login.php">Login</a> or 
-		<a href="register.php">Register</a>
+		<a href="login.php">Einloggen</a> oder 
+		<a href="register.php">Registrieren</a>
 	
 	<?php endif; ?>
 

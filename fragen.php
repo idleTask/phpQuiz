@@ -47,7 +47,7 @@ if ($user['admin']) {
 <body>
 	
 	<header> 
-		<a href="index.php">Quizz</a>
+		<a href="index.php">Quiz</a>
 	</header>
 	
 	<?php if(!empty($message)): ?>

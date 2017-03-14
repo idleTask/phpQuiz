@@ -53,7 +53,7 @@ if(isset($_SESSION['user_id'])){
 				<a href="logout.php">Logout?</a>
 		</aside>
 		<?php endif; ?>
-		<a href="index.php">Quizz</a>
+		<a href="index.php">Quiz</a>
 	</header>
 	
 	
@@ -103,7 +103,15 @@ if(isset($_SESSION['user_id'])){
 				
 				?>
 				</header>
-			<br /><br />Score: <?= $user['score']; ?>
+			<br /><br />Score: 
+			<?php 
+			if ($richtig){
+				echo $user['score'] + 1; 
+			} else {
+				echo $user['score'];
+			}
+				
+			?>
 			
 			
 		</section>
@@ -115,8 +123,8 @@ if(isset($_SESSION['user_id'])){
 	<?php else: ?>
 	
 		<h1>Bitte einloggen oder registrieren!</h1>
-		<a href="login.php">Login</a> or 
-		<a href="register.php">Register</a>
+		<a href="login.php">Einloggen</a> oder 
+		<a href="register.php">Registrieren</a>
 	
 	<?php endif; ?>
 
